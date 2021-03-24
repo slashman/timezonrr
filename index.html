@@ -32,6 +32,10 @@
 				{ eventName: "event2", utcVar: -8, localTime: 13},
 				{ eventName: "event3", utcVar: +1, localTime: 20},
 			];
+
+			data.sort((a,b) => {
+				return (a.localTime - a.utcVar) - (b.localTime - b.utcVar);
+			})
 			var tableHTMLYeahSorry = '<table>';
 			data.forEach((event, i) => {
 				tableHTMLYeahSorry += '<tr><td>' + event.eventName + '</td><td id = "row'+i+'"></td></tr>';
