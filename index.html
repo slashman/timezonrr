@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<title>Timezonrr by Slashie</title>
+		<style>
+			body {
+				font-family: sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Timezonrr by Slashie</h2>
+		<p>Select the UTC/GMT variation of your timezone: </p>
+		<p id="sliderValue"></p>
+		<div class="slidecontainer">
+			<input type="range" min="-12" max="12" value="-5" class="slider" id="myRange">
+		</div>
+		<p id = "eventsTable"></p>
+		<h4>Powered by Timezonrr by Slashie</h1>
+		<script>
+			var slider = document.getElementById("myRange");
+			var output = document.getElementById("sliderValue");
+			output.innerHTML = "You are in UTC" + (slider.value > 0 ? ("+" + slider.value) : slider.value);
+			var currentUTCVar = parseInt(slider.value, 10);
+			slider.oninput = function() {
+				output.innerHTML = "You are in UTC" + (this.value > 0 ? ("+" + this.value) : this.value);
+				currentUTCVar = parseInt(this.value, 10);
+				updateTable();
+			}
+
+			const data = [
+				{ eventName: "event1", utcVar: -5, localTime: 16},
+				{ eventName: "event2", utcVar: -8, localTime: 13},
+				{ eventName: "event3", utcVar: +1, localTime: 20},
+			];
+			var tableHTMLYeahSorry = '<table>';
+			data.forEach((event, i) => {
+				tableHTMLYeahSorry += '<tr><td>' + event.eventName + '</td><td id = "row'+i+'"></td></tr>';
+			});
+			tableHTMLYeahSorry += '</table>';
+
+			function updateTable () {
+				data.forEach((event, i) => {
+					document.getElementById('row'+i).innerHTML = formatTime(event.localTime - event.utcVar + currentUTCVar);
+				})
+			}
+
+			function formatTime (time) {
+				var suffix = '';
+				if (time >= 24) {
+					time -= 24;
+					suffix = ', tomorrow'
+				} else if (time < 0) {
+					time += 24;
+					suffix = ', yesterday'
+				}
+				var timeString;
+				if (time > 12) {
+					timeString = (time - 12) + ":00 PM"
+				} else {
+					timeString = time + ":00 AM"
+				}
+				return timeString + suffix;
+			}
+
+			document.getElementById("eventsTable").innerHTML = tableHTMLYeahSorry;
+
+			updateTable();
+		</script>
+	</body>
+</html>
