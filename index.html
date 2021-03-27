@@ -17,13 +17,16 @@
 		<p>Select the UTC/GMT variation of your timezone: </p>
 		<p id="sliderValue"></p>
 		<div class="slidecontainer">
-			<input type="range" min="-12" max="12" value="-5" class="slider" id="myRange">
+			<input type="range" min="-12" max="12" class="slider" id="myRange">
 		</div>
 		<p id = "eventsTable"></p>
 		<h4>Powered by Timezonrr by Slashie</h1>
 		<script>
 			var slider = document.getElementById("myRange");
 			var output = document.getElementById("sliderValue");
+			
+			var userOffset = -(new Date().getTimezoneOffset() / 60)
+			slider.value = userOffset;
 			output.innerHTML = "You are in UTC" + (slider.value > 0 ? ("+" + slider.value) : slider.value);
 			var currentUTCVar = parseInt(slider.value, 10);
 			slider.oninput = function() {
